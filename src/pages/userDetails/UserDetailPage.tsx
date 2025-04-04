@@ -1,14 +1,17 @@
 // pages/UserDetails.tsx
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { clearUser, fetchUserById } from "../../app/userById/userByIdThunk";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
 import "./user-detail-style.css";
 import { FaUser } from "react-icons/fa6";
+import { Link } from "react-router-dom";
+import { ROUTE_PATHS } from "../../routes/routePaths";
 const UserDetailPage = () => {
   const { id } = useParams();
   const userId = Number(id);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate()
 
   // Get user from userByIdSlice state (this will be from cached users in localStorage)
   const { user, loading, error } = useAppSelector((state) => state.userById);
@@ -23,6 +26,8 @@ const UserDetailPage = () => {
     };
   }, [userId, dispatch]);
 
+
+
   if (loading) return <p>Loading user details...</p>;
   if (error) return <p>Error: {error}</p>;
   if (!user) return <p>User not found in cached data.</p>;
@@ -32,7 +37,7 @@ const UserDetailPage = () => {
       <div className="user-info-card">
         <div className="left-side">
           <FaUser className="user-icon" />
-          <div className="edit-button">Edit Me</div>
+          <Link to={`/edit-user/${userId}`} className="edit-button" >Edit Me</Link>
         </div>
         <div className="user-info">
           <h2>{user.name}</h2>
