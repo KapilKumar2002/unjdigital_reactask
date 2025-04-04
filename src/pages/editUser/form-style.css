@@ -1,0 +1,26 @@
+.react-form{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.react-form input{
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+.react-form input:focus{
+    border-color: #007bff;
+    outline: none;
+}
+.react-form button{
+    padding: 0.5rem 1rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.react-form button:hover{
+    background-color: #0056b3;
+}

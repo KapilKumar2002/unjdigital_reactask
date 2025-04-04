@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks'
 import { User } from '../../types/user'
 import { clearUser, fetchUserById } from '../../app/userById/userByIdThunk'
 import { updateUser } from '../../app/users/usersSlice'
-
+import "./form-style.css"
 
 const EditUser = () => {
   const { id } = useParams()
@@ -56,7 +56,7 @@ const EditUser = () => {
     // Create updatedUser object, ensuring it's of type User
     const updatedUser: User = { ...formData }
     dispatch(updateUser(updatedUser)) // Dispatch with typed payload (User)
-    navigate(`/users/${userId}`) // Redirect to user detail page after saving
+    navigate(`/user/${userId}`) // Redirect to user detail page after saving
   }
 
   if (loading) return <p>Loading...</p>
@@ -64,9 +64,9 @@ const EditUser = () => {
   if (!user) return <p>User not found in cached data.</p>
 
   return (
-    <div>
+    <div className='container'>
       <h2>Edit User</h2>
-      <form>
+      <form className='react-form'>
         <label>Name:</label>
         <input
           type="text"
