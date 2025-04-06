@@ -1,0 +1,91 @@
+.users-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-decoration: none;
+}
+
+.user-card {
+    border: var(--custom-border);
+    border-radius: 5px;
+    padding: 20px;
+    background-color: bisque;
+    box-shadow: var(--custom-shadow);
+    position: relative;
+    transition: box-shadow 0.3s ease;
+}
+
+.search-input {
+    padding: 10px 15px;
+    justify-self: center;
+    margin-bottom: 20px;
+    border-radius: 50px;
+    outline: none;
+    display: flex;
+    gap: 10px;
+    border: var(--custom-border);
+    box-shadow: var(--custom-shadow);
+}
+
+.search-input>input {
+    width: 100%;
+    outline: none;
+    border: none;
+    background-color: transparent;
+}
+
+.user-card:hover {
+    box-shadow: var(--hover-shadow);
+}
+
+.user-card::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    width: 0;
+    background-color: #00ff15;
+    transition: width 0.4s ease-out;
+    transform-origin: right;
+}
+
+.user-card:hover::after {
+    width: 100%;
+}
+
+
+.load-more {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    padding: 10px 20px;
+}
+
+
+.delete-icon {
+    color: red;
+    font-size: 20px;
+}
+
+.delete-button {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    background-color: antiquewhite;
+    border: var(--custom-border);
+    box-shadow: var(--custom-shadow);
+    border-radius: 50%;
+    outline: none;
+
+}

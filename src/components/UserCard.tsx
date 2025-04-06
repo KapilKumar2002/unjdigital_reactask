@@ -1,7 +1,5 @@
 import React from 'react'
-import { User } from '../types/user' // Update the path as needed
-import { FiDelete } from 'react-icons/fi'
-import { AiFillDelete } from 'react-icons/ai'
+import { User } from '../types/user'
 import { useAppDispatch } from '../hooks/reduxHooks'
 import { deleteUser } from '../app/users/usersSlice'
 
@@ -13,16 +11,22 @@ interface UserCardProps {
 const UserCard: React.FC<UserCardProps> = ({ user, onClick }) => {
   const dispatch = useAppDispatch()
 
-  const handleDelete = (userId: number) => {
-    // Dispatch delete action to remove user from cachedUsers
+  const handleDelete = (e: React.MouseEvent, userId: number) => {
+    e.stopPropagation()
     dispatch(deleteUser(userId))
   }
+
   return (
-    <div onClick={() => onClick(user.id)} className="user-card">
-      <h3>{user.name}</h3>
-      <p>{user.email}</p>
-      <div className='delete-icon' onClick={() => handleDelete}>
-      <AiFillDelete />
+    <div 
+      onClick={() => onClick(user.id)} 
+      className="user-card"
+    >
+      <div className="">
+        <div>
+          <h3 className="">{user.name}</h3>
+          <p className="">{user.email}</p>
+        </div>
+        
       </div>
     </div>
   )

@@ -3,10 +3,12 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks'
 import { User } from '../../types/user'
 import { clearUser, fetchUserById } from '../../app/userById/userByIdThunk'
-import { updateUser } from '../../app/users/usersSlice'
+import { createUser, updateUser } from '../../app/users/usersSlice'
 import "./form-style.css"
+import { ToastContainer, toast } from 'react-toastify';
+import notify from '../../components/customToast'
 
-const EditUser = () => {
+const EditUserPage = () => {
   const { id } = useParams()
   const userId = Number(id)
   const dispatch = useAppDispatch()
@@ -20,6 +22,7 @@ const EditUser = () => {
     name: '',
     email: '',
     phone: '',
+    address: '',
   })
 
   useEffect(() => {
@@ -33,7 +36,7 @@ const EditUser = () => {
   }, [userId, dispatch])
 
   useEffect(() => {
-    if (user) {
+    if (id && user) {
       // Pre-fill the form with the current user's data, including `id`
       setFormData({
         id: user.id, // Set the id here
@@ -52,20 +55,30 @@ const EditUser = () => {
     }))
   }
 
-  const handleSave = () => {
+
+
+  const handleUpdateUser = () => {
     // Create updatedUser object, ensuring it's of type User
     const updatedUser: User = { ...formData }
     dispatch(updateUser(updatedUser)) // Dispatch with typed payload (User)
+    notify("User has been updated!")
     navigate(`/user/${userId}`) // Redirect to user detail page after saving
+  }
+  const handleCreateUser = () => {
+    const now = new Date();
+    const id: number = now.getMilliseconds();
+    const newUser: User = { ...formData, id }
+    dispatch(createUser(newUser)) // Dispatch with typed payload (User)
+    notify("User has been created!")
+    navigate(`/`) // Redirect to user detail page after saving
   }
 
   if (loading) return <p>Loading...</p>
   if (error) return <p>Error: {error}</p>
-  if (!user) return <p>User not found in cached data.</p>
+  // if (!user) return <p>User not found in cached data.</p>
 
   return (
     <div className='container'>
-      <h2>Edit User</h2>
       <form className='react-form'>
         <label>Name:</label>
         <input
@@ -88,12 +101,19 @@ const EditUser = () => {
           value={formData.phone}
           onChange={handleChange}
         />
-        <label>Address:</label>
-        
-        <button type="button" onClick={handleSave}>Save</button>
+        {id == null && <>
+          <label>Address:</label>
+          <input
+            type="text"
+            name="address"
+            value={formData.address}
+            onChange={handleChange}
+          /></>}
+        <button type="button" onClick={user ? handleUpdateUser : handleCreateUser}>{id ? "Update" : "Create"} User</button>
       </form>
+      <ToastContainer />
     </div>
   )
 }
 
-export default EditUser
+export default EditUserPage

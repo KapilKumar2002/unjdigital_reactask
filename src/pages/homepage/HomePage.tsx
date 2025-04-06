@@ -1,16 +1,18 @@
-import React, { useEffect, useRef, useCallback } from 'react'
+import React, { useEffect, useRef, useCallback, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks'
 import { fetchUsers } from '../../app/users/usersThunk'
-import "./users_style.css"
+import { searchUsers } from '../../app/users/usersSlice'
+import './users_style.css'
 import UserCard from '../../components/UserCard'
 import LoadMore from '../../components/loader/LoadMore'
+import { FaSearch } from 'react-icons/fa'
 
 const HomePage: React.FC = () => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
 
-  const { cachedUsers, status, page, hasMore } = useAppSelector((state) => state.users)
+  const { filteredUsers, cachedUsers, status, page, hasMore } = useAppSelector((state) => state.users)
 
   const loaderRef = useRef<HTMLDivElement | null>(null)
 
@@ -49,17 +51,33 @@ const HomePage: React.FC = () => {
     }
   }, [dispatch, cachedUsers.length])
 
+  const [searchQuery, setSearchQuery] = useState('')
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const query = e.target.value
+    setSearchQuery(query)
+    dispatch(searchUsers(query))
+  }
+
   return (
     <div className="container">
-      <h1>Users List</h1>
+      <div className='search-input'>
+      <input
+        type="text"
+        placeholder="Search by name or email..."
+        value={searchQuery}
+        onChange={handleSearchChange}
+        className=""
+      />
+      <FaSearch />
+      </div>
 
       <div className="users-list">
-        {cachedUsers.map((user) => (
-          <UserCard  key={user.id} user={user} onClick={handleUserClick} />
+        {filteredUsers.map((user) => (
+          <UserCard key={user.id} user={user} onClick={handleUserClick} />
         ))}
       </div>
 
-      {/* Loader */}
       {hasMore && (
         <div ref={loaderRef} className="load-more">
           {status === 'loading' && <LoadMore />}

@@ -1,56 +1,74 @@
-.user-details{
-    max-width: 60vw;
+.user-info {
+    max-width: 350px;
     margin: 0 auto;
     padding: 20px;
 }
 
-.user-info-card{
-    border: 1px solid #ccc;
+.user-info-card {
     border-radius: 5px;
     padding: 20px;
-    background-color: #fff;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    background-color: var(--primary-color);
+    box-shadow: var(--custom-shadow);
     display: flex;
-    align-items: start;
+    flex-direction: column;
+    align-items: center;
     gap: 20px;
+    border: var(--custom-border);
 }
 
-.user-icon{
+.user-icon {
     width: 100px;
     height: 100px;
     border-radius: 50%;
-     background-color: #f0f0f0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
+    background-color: #f0f0f0;
+    box-shadow: var(--custom-shadow);
 }
 
-.left-side{
+.identity {
     display: flex;
     flex-direction: column;
     gap: 10px;
     align-items: center;
 }
 
-.edit-button{
-    background-color: #007bff;
-    color: #fff;
-    border: none;
+.personal-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.personal-info>h2 {
+    font-size: 20px;
+    line-height: 0px;
+}
+
+.personal-info p {
+    font-size: 14px;
+    line-height: 0;
+}
+
+.edit-button {
+    border: var(--custom-border);
     padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
     font-weight: 600;
     font-size: 14px;
-    transition: background-color 0.3s ease;
+    box-shadow: var(--custom-shadow);
+    transition: box-shadow 0.3s ease;
+}
+
+.edit-button:hover {
+    box-shadow: var(--hover-shadow);
 }
 
 
 
-@media screen and (max-width: 768px) {
-    .user-details{
+@media screen and (max-width: 500px) {
+    .user-info {
         max-width: 100%;
     }
-    
-    
+
+
 }
